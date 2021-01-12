@@ -1,10 +1,15 @@
+import { InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
+import Link from 'next/link'
+
+// SHARED
+import { getPostList } from '@shared/util'
 
 // COMPONENTS
 import Header from '@components/Header'
 import Navigation from '@components/Navigation'
 
-export default function Home() {
+function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <Head>
@@ -14,7 +19,34 @@ export default function Home() {
       <main>
         <Navigation />
         <Header />
+
+        {posts.length > 0 && (
+          <ul>
+            {posts.map(slug => (
+              <li key={slug}>
+                <Link href={`post/${slug}`}>
+                  <a>
+                    {slug.replace(/-/g, ' ')}
+                  </a>
+                </Link>
+
+              </li>
+            ))}
+          </ul>
+        )}
       </main>
     </>
   )
 }
+
+export const getStaticProps = async () => {
+  const posts = getPostList()
+
+  return {
+    props: {
+      posts
+    }
+  }
+}
+
+export default Home
