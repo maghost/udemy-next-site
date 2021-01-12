@@ -1,0 +1,15 @@
+.list {
+  display: flex;
+  list-style: none;
+  padding: 1em 0;
+  gap: 1rem;
+}
+
+.navAnchor {
+  text-decoration: underline 2px;
+}
+
+.navAnchor:hover,
+.navAnchor:focus {
+  text-decoration: underline dotted 2px;
+}
